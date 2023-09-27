@@ -1,4 +1,4 @@
 opencv-python-headless
 streamlit
 Pillow
-git+https://github.com/ultralytics/ultralytics.git
+ultralytics
