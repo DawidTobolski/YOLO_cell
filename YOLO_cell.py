@@ -43,7 +43,7 @@ def predict_image(image_path):
 
 # Main Streamlit function
 def main():
-    st.title("YOLO Prediction")
+    st.title("EndoScan: YOLO Subclinical Endometritis Detector")
 
     uploaded_file = st.file_uploader("Choose an image for prediction", type=['jpg', 'jpeg', 'png'])
     if uploaded_file is not None:
