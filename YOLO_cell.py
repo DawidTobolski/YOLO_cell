@@ -4,15 +4,15 @@ from PIL import Image
 from ultralytics import YOLO
 import re
 
-# Wczytaj model
+# Load the model
 model = YOLO("model.pt")
 
-# Ustal ścieżkę dla wyników
+# Set the path for results
 output_dir = 'temp_out_res'
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 
-# Funkcja do przewidywania obrazów
+# Function to predict images
 def predict_image(image_path):
     results = model.predict(source=image_path)
     input_filename = os.path.basename(results[0].path)
@@ -41,23 +41,23 @@ def predict_image(image_path):
 
     return os.path.join(output_dir, input_filename), total_polis, total_monos, polis_percentage
 
-# Główna funkcja Streamlit
+# Main Streamlit function
 def main():
-    st.title("YOLO Predykcja")
+    st.title("YOLO Prediction")
 
-    uploaded_file = st.file_uploader("Wybierz obraz do przewidzenia", type=['jpg', 'jpeg', 'png'])
+    uploaded_file = st.file_uploader("Choose an image for prediction", type=['jpg', 'jpeg', 'png'])
     if uploaded_file is not None:
         image_path = os.path.join(output_dir, uploaded_file.name)
         with open(image_path, 'wb') as f:
             f.write(uploaded_file.getbuffer())
-        st.image(image_path, caption='Wczytane zdjęcie.', use_column_width=True)
+        st.image(image_path, caption='Uploaded image.', use_column_width=True)
         
-        if st.button("Przewiduj"):
+        if st.button("Predict"):
             pred_img_path, polis_count, monos_count, polis_perc = predict_image(image_path)
-            st.image(pred_img_path, caption='Przewidziane zdjęcie.', use_column_width=True)
-            st.write(f"Łączna liczba komórek 'polis': {polis_count}")
-            st.write(f"Łączna liczba komórek 'monos': {monos_count}")
-            st.write(f"Procent komórek polimorfonuklearnych: {polis_perc:.2f}%")
+            st.image(pred_img_path, caption='Predicted image.', use_column_width=True)
+            st.write(f"Total count of polymorphonuclear cells: {polis_count}")
+            st.write(f"Total count of mononuclear cells: {monos_count}")
+            st.write(f"Percentage of polymorphonuclear cells: {polis_perc:.2f}%")
 
 if __name__ == '__main__':
     main()
