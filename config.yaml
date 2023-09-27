@@ -1,0 +1,8 @@
+path: "D:\GitHub\YOLO_cell\config.yaml"
+
+train: images
+val: images
+
+names:
+  0: poli
+  1: mono
